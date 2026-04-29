@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Johnson | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            scroll-behavior: smooth;
+        }
+        .serif { font-family: 'Playfair Display', serif; }
+        
+        /* 텍스트 히어로 스타일 */
+        .hero-text {
+            font-size: clamp(2.5rem, 8vw, 6.5rem);
+            line-height: 1;
+            letter-spacing: -0.05em;
+        }
+
+        /* 커스텀 애니메이션 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Clients 타이틀: 컬럼 너비에 비례하여 크기 자동 조정 */
+        .clients-title {
+            font-size: clamp(3rem, 5vw, 7.5rem);
+            line-height: 1;
+        }
+
+        /* 히스토리 구분선 스타일 */
+        .history-row {
+            border-top: 1px solid #1a1a1a;
+            padding: 1.25rem 0;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 0.75rem;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .history-row:hover {
+            background-color: #fcfcfc;
+            padding-left: 1rem;
+        }
+        @media (max-width: 640px) {
+            .history-row {
+                grid-template-columns: 1fr auto;
+                grid-template-rows: auto auto;
+                padding: 1rem 0;
+            }
+            .history-row .row-date {
+                grid-column: 1 / -1;
+                margin-bottom: 0.25rem;
+            }
+            .history-row .row-category {
+                text-align: right;
+            }
+        }
+
+        /* Works 가로 스크롤 */
+        .works-scroll-wrapper {
+            position: relative;
+        }
+        .works-scroll-outer {
+            overflow-x: scroll;
+            overflow-y: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 3rem 0;
+            width: 100%;
+        }
+        .works-scroll-outer::-webkit-scrollbar { display: none; }
+        .works-scroll-track {
+            display: flex;
+            gap: 1.5rem;
+            width: max-content;
+            align-items: center;
+        }
+
+        /* 넘기기 버튼 */
+        .works-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            color: rgba(0, 0, 0, 0.25);
+            transition: color 0.3s ease, transform 0.3s ease;
+            padding: 0;
+        }
+        .works-nav-btn:hover {
+            color: rgba(0, 0, 0, 0.7);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .works-nav-prev { left: 1.25rem; }
+        .works-nav-next { right: 1.25rem; }
+
+        /* 패럴랙스 소개 섹션 */
+        .parallax-about {
+            position: relative;
+            overflow: hidden;
+            min-height: 115vh;
+        }
+        .parallax-about-bg {
+            position: absolute;
+            inset: -45% 0;
+            background-image: url('images/KakaoTalk_20260427_144848673_05.jpg');
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+        }
+        .parallax-about-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0,0,0,0.38) 0%,
+                rgba(0,0,0,0.18) 50%,
+                rgba(0,0,0,0.52) 100%
+            );
+        }
+        .parallax-about-inner {
+            position: relative;
+            z-index: 2;
+            min-height: 115vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 6rem 1.5rem 5rem;
+            max-width: 80rem;
+            margin: 0 auto;
+            color: white;
+        }
+
+        /* 주사위 버튼 */
+        .dice-btn {
+            width: 5rem;
+            height: 5rem;
+            background: #0a0a0a;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(12deg);
+            transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
+            margin: 0 auto;
+        }
+        .dice-btn:hover {
+            transform: rotate(0deg) scale(1.08);
+            box-shadow: 0 28px 55px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+        .dice-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 9px);
+            grid-template-rows: repeat(3, 9px);
+            gap: 5px;
+        }
+        .dice-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: transparent;
+            transition: background 0.08s ease;
+        }
+        .dice-dot.on {
+            background: #ffffff;
+            box-shadow: 0 0 5px rgba(255,255,255,0.7);
+        }
+        @keyframes dice-roll-anim {
+            0%   { transform: rotate(12deg) scale(1); }
+            10%  { transform: rotate(-60deg) scale(0.8) translateY(-14px); }
+            22%  { transform: rotate(200deg) scale(0.88); }
+            35%  { transform: rotate(-40deg) scale(1.14) translateY(-8px); }
+            48%  { transform: rotate(290deg) scale(0.88); }
+            60%  { transform: rotate(100deg) scale(1.07) translateY(-4px); }
+            72%  { transform: rotate(348deg) scale(0.93); }
+            83%  { transform: rotate(7deg) scale(1.03); }
+            92%  { transform: rotate(-2deg) scale(0.98); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+        .dice-btn.rolling {
+            animation: dice-roll-anim 1s ease-out forwards;
+            pointer-events: none;
+        }
+
+        /* 카드 기본 상태 */
+        .scroll-card {
+            flex: 0 0 auto;
+            width: 280px;
+            cursor: pointer;
+            transform-origin: center center;
+            transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 1;
+        }
+        /* 트랙 호버 시: 나머지 카드는 작아짐 */
+        .works-scroll-track:hover .scroll-card {
+            transform: scale(0.88);
+        }
+        /* 호버된 카드만: 크게, z-index로 위에 표시 */
+        .works-scroll-track:hover .scroll-card:hover {
+            transform: scale(1.18);
+            z-index: 10;
+        }
+        .scroll-card .img-wrap {
+            overflow: hidden;
+            background: #f0f0f0;
+            aspect-ratio: 3/4;
+            margin-bottom: 1.25rem;
+        }
+        .scroll-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .scroll-card .card-num {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="selection:bg-blue-100">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm px-6 h-20 flex justify-between items-center border-b border-gray-100">
+        <div class="font-bold tracking-tighter text-xl">DAVID JOHNSON</div>
+        <div class="space-x-12 hidden md:flex text-sm font-medium">
+            <a href="#section_1" class="hover:opacity-50 transition-opacity">Projects</a>
+            <a href="#section_2" class="hover:opacity-50 transition-opacity">History</a>
+            <a href="#" class="hover:opacity-50 transition-opacity">About</a>
+            <a href="#" class="hover:opacity-50 transition-opacity">Contact</a>
+        </div>
+        <button class="md:hidden font-bold text-sm uppercase tracking-widest">Menu</button>
+    </nav>
+
+    <main>
+        <!-- Hero Section: Typography Focused -->
+        <header class="pt-56 pb-40 px-6 max-w-7xl mx-auto">
+            <div class="max-w-6xl">
+                <p class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-10">(Creative Agency / 2024)</p>
+                <h1 class="hero-text serif font-bold mb-16">
+                    Archive. <br>
+                    <span class="italic font-normal">Building</span> meaningful <br>
+                    digital <span class="text-blue-600">solutions.</span>
+                </h1>
+                <div class="flex flex-col md:flex-row gap-12 items-start">
+                    <p class="text-xl text-gray-500 max-w-md leading-tight">
+                        We pride ourselves on connecting talented photographers with clients seeking professional and stunning visual content.
+                    </p>
+                    <div class="h-[1px] w-24 bg-black mt-4 hidden md:block"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Section 1: Selected Works (Asymmetric Layout with 4 items) -->
+        <section id="section_1" class="px-6 max-w-7xl mx-auto mb-56 fade-in">
+            <div class="flex justify-between items-end mb-20">
+                <h2 class="serif text-6xl tracking-tight">Works.</h2>
+                <p class="text-gray-400 text-sm italic">Selected Projects 2022—2024</p>
+            </div>
+            
+            <div class="works-scroll-wrapper" id="worksWrapper">
+                <button class="works-nav-btn works-nav-prev" id="worksPrev" aria-label="Previous">
+                    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button class="works-nav-btn works-nav-next" id="worksNext" aria-label="Next">
+                    <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            <div class="works-scroll-outer -mx-6" id="worksScroll">
+                <div class="works-scroll-track" id="worksTrack">
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_144848673_01.jpg" alt="Work 01">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 01</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">01</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_144848673_02.jpg" alt="Work 02">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 02</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">02</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_144848673_03.jpg" alt="Work 03">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 03</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">03</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_144848673_04.jpg" alt="Work 04">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 04</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">04</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_144848673_05.jpg" alt="Work 05">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 05</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">05</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_144848673_11.jpg" alt="Work 06">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 06</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">06</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_152455665_03.jpg" alt="Work 07">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 07</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">07</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_152605229_02.jpg" alt="Work 08">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 08</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Mixed Media</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">08</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_152605229_04.jpg" alt="Work 09">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 09</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">09</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_152605229_06.jpg" alt="Work 10">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 10</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">10</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_152605229_07.jpg" alt="Work 11">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 11</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">11</span>
+                        </div>
+                    </div>
+                    <div class="scroll-card">
+                        <div class="img-wrap">
+                            <img src="images/KakaoTalk_20260427_152605229_08.jpg" alt="Work 12">
+                        </div>
+                        <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+                            <div>
+                                <h3 class="text-base font-bold uppercase tracking-tight">Untitled 12</h3>
+                                <p class="text-gray-400 text-xs mt-0.5">Acrylic on Canvas</p>
+                            </div>
+                            <span class="card-num text-lg text-gray-300">12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div><!-- /works-scroll-wrapper -->
+        </section>
+
+        <!-- Section 2: History (Layout shifted to the right) -->
+        <section id="section_2" class="px-6 max-w-7xl mx-auto mb-64 fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+                <!-- Left Sticky Title Area -->
+                <div class="md:col-span-3 min-w-0 overflow-hidden" style="margin-top: calc(1.25rem - 3.8cm)">
+                    <h2 class="clients-title serif tracking-tighter mb-8 md:mb-0 lg:sticky lg:top-32">Clients.</h2>
+                </div>
+
+                <!-- Right Content Area (History List) -->
+                <div class="md:col-span-9 border-b border-gray-100 min-w-0">
+                    <div class="history-row">
+                        <span class="row-date text-xs uppercase tracking-widest text-gray-400">Jan.01 2024</span>
+                        <h3 class="text-lg md:text-3xl font-medium tracking-tight uppercase">Couture Avenue</h3>
+                        <span class="row-category text-right text-gray-400 text-xs uppercase">Identity</span>
+                    </div>
+                    <div class="history-row">
+                        <span class="row-date text-xs uppercase tracking-widest text-gray-400">Dec.12 2023</span>
+                        <h3 class="text-lg md:text-3xl font-medium tracking-tight uppercase">Dynamic Frames</h3>
+                        <span class="row-category text-right text-gray-400 text-xs uppercase">Web Design</span>
+                    </div>
+                    <div class="history-row">
+                        <span class="row-date text-xs uppercase tracking-widest text-gray-400">Oct.10 2023</span>
+                        <h3 class="text-lg md:text-3xl font-medium tracking-tight uppercase">Vogue Couture</h3>
+                        <span class="row-category text-right text-gray-400 text-xs uppercase">Direction</span>
+                    </div>
+                    <div class="history-row">
+                        <span class="row-date text-xs uppercase tracking-widest text-gray-400">Oct.10 2023</span>
+                        <h3 class="text-lg md:text-3xl font-medium tracking-tight uppercase">Elegance Trends</h3>
+                        <span class="row-category text-right text-gray-400 text-xs uppercase">Visuals</span>
+                    </div>
+                    <div class="history-row">
+                        <span class="row-date text-xs uppercase tracking-widest text-gray-400">Mar.03 2023</span>
+                        <h3 class="text-lg md:text-3xl font-medium tracking-tight uppercase">Glamour Style</h3>
+                        <span class="row-category text-right text-gray-400 text-xs uppercase">Branding</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Parallax About -->
+        <section class="parallax-about fade-in" id="section_3">
+            <div class="parallax-about-bg" id="parallaxBg"></div>
+            <div class="parallax-about-overlay"></div>
+            <div class="parallax-about-inner">
+                <!-- 상단 텍스트 -->
+                <div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-white/50 mb-6">Artist Statement</p>
+                    <h2 class="serif font-bold text-white leading-none" style="font-size: clamp(3rem, 8vw, 7rem);">
+                        Expression.<br>
+                        <span class="font-normal italic">Through</span><br>
+                        Color.
+                    </h2>
+                </div>
+                <!-- 우측 작은 텍스트 -->
+                <div class="flex justify-end">
+                    <p class="text-white/75 text-sm max-w-xs leading-relaxed text-right">
+                        I create paintings that explore the boundary between control and spontaneity.<br>
+                        I love analyzing the flow of color and creating something familiar yet entirely new.
+                    </p>
+                </div>
+                <!-- 하단 대형 텍스트 -->
+                <div>
+                    <h2 class="serif font-bold text-white leading-none" style="font-size: clamp(2.2rem, 6vw, 5.5rem);">
+                        I paint what<br>cannot be said.
+                    </h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- 패럴랙스 하단 소개글 -->
+        <div class="max-w-7xl mx-auto px-6 py-24 fade-in">
+            <p class="text-gray-500 max-w-lg leading-relaxed text-lg">
+                I help the canvas define its own energy and thrive.<br>
+                From the first brushstroke to the final layer, I create works that stand out today — so that people can hold onto them tomorrow.
+            </p>
+        </div>
+
+        <!-- Final Archive Statement -->
+        <section class="px-6 max-w-7xl mx-auto mb-64 text-center fade-in">
+            <h2 class="hero-text serif font-bold tracking-tighter mb-20 opacity-10">Archive.</h2>
+            <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Scroll to top"
+                class="w-20 h-20 bg-black mx-auto flex items-center justify-center transform rotate-12 hover:rotate-0 hover:bg-blue-600 transition-all duration-500 cursor-pointer shadow-xl">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+            </button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-end mb-24">
+                <div>
+                    <h2 class="serif text-7xl md:text-9xl mb-12">Let's Create.</h2>
+                    <p class="text-gray-400 max-w-sm text-lg leading-relaxed">Capturing Moments, Creating Memories. Your vision, our lens.</p>
+                </div>
+                <div class="flex flex-col md:items-end">
+                    <div class="w-full h-[1px] bg-gray-800 mb-12"></div>
+                    <a href="mailto:hello@davidjohnson.com" class="text-2xl md:text-4xl font-light hover:text-blue-400 transition-colors mb-12 border-b border-transparent hover:border-blue-400">hello@davidjohnson.com</a>
+                    <div class="flex gap-12 text-xs uppercase tracking-widest text-gray-500">
+                        <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                        <a href="#" class="hover:text-white transition-colors">Behance</a>
+                        <a href="#" class="hover:text-white transition-colors">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-gray-900 flex justify-between items-center text-[10px] tracking-widest text-gray-700">
+                <p>© 2024 DAVID JOHNSON. ALL RIGHTS RESERVED.</p>
+                <div class="flex gap-4">
+                    <span class="cursor-pointer hover:text-gray-400">PRIVACY</span>
+                    <span class="cursor-pointer hover:text-gray-400">TERMS</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Fade-in Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Works 무한 스크롤 (rAF 방식 + 버튼 제어)
+        const worksOuter   = document.getElementById('worksScroll');
+        const worksTrack   = document.getElementById('worksTrack');
+        const worksWrapper = document.getElementById('worksWrapper');
+
+        // 트랙 복제해서 이음새 없이 루프
+        worksTrack.insertAdjacentHTML('beforeend', worksTrack.innerHTML);
+
+        let worksPaused = false;
+        let manualTimer = null;
+
+        function getHalf() { return worksTrack.scrollWidth / 2; }
+
+        (function tick() {
+            if (!worksPaused) {
+                worksOuter.scrollLeft += 0.8;
+                if (worksOuter.scrollLeft >= getHalf()) {
+                    worksOuter.scrollLeft -= getHalf();
+                }
+            }
+            requestAnimationFrame(tick);
+        })();
+
+        // 마우스 올리면 일시정지
+        worksWrapper.addEventListener('mouseenter', () => {
+            clearTimeout(manualTimer);
+            worksPaused = true;
+        });
+        worksWrapper.addEventListener('mouseleave', () => {
+            worksPaused = false;
+        });
+
+        // 버튼: 클릭 후 잠시 정지했다가 재개
+        function manualScroll(dir) {
+            worksPaused = true;
+            worksOuter.scrollBy({ left: dir * 320, behavior: 'smooth' });
+            clearTimeout(manualTimer);
+            manualTimer = setTimeout(() => { worksPaused = false; }, 900);
+        }
+        document.getElementById('worksPrev').addEventListener('click', () => manualScroll(-1));
+        document.getElementById('worksNext').addEventListener('click', () => manualScroll(1));
+
+        // 패럴랙스 효과: 배경이 스크롤보다 느리게 움직임
+        const parallaxBg = document.getElementById('parallaxBg');
+        if (parallaxBg) {
+            const section = parallaxBg.closest('.parallax-about');
+            function updateParallax() {
+                const offset = (window.scrollY - section.offsetTop) * 0.45;
+                parallaxBg.style.transform = `translateY(${offset}px)`;
+            }
+            window.addEventListener('scroll', updateParallax, { passive: true });
+            updateParallax();
+        }
+
+    </script>
+</body>
+</html>
