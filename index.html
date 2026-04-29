@@ -117,16 +117,19 @@
         /* 패럴랙스 소개 섹션 */
         .parallax-about {
             position: relative;
-            overflow: hidden;
             min-height: 115vh;
-        }
-        .parallax-about-bg {
-            position: absolute;
-            inset: -45% 0;
             background-image: url('images/KakaoTalk_20260427_144848673_05.jpg');
+            background-attachment: fixed;
             background-size: cover;
             background-position: center;
-            will-change: transform;
+        }
+        /* transform 없는 opacity 전용 페이드 (background-attachment:fixed 보호용) */
+        .fade-in-only {
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-in-only.visible {
+            opacity: 1;
         }
         .parallax-about-overlay {
             position: absolute;
@@ -483,8 +486,7 @@
         </section>
 
         <!-- Section 3: Parallax About -->
-        <section class="parallax-about fade-in" id="section_3">
-            <div class="parallax-about-bg" id="parallaxBg"></div>
+        <section class="parallax-about fade-in-only" id="section_3">
             <div class="parallax-about-overlay"></div>
             <div class="parallax-about-inner">
                 <!-- 상단 텍스트 -->
@@ -575,7 +577,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.querySelectorAll('.fade-in, .fade-in-only').forEach(el => observer.observe(el));
 
         // Works 무한 스크롤 (rAF 방식 + 버튼 제어)
         const worksOuter   = document.getElementById('worksScroll');
@@ -619,17 +621,6 @@
         document.getElementById('worksPrev').addEventListener('click', () => manualScroll(-1));
         document.getElementById('worksNext').addEventListener('click', () => manualScroll(1));
 
-        // 패럴랙스 효과: 배경이 스크롤보다 느리게 움직임
-        const parallaxBg = document.getElementById('parallaxBg');
-        if (parallaxBg) {
-            const section = parallaxBg.closest('.parallax-about');
-            function updateParallax() {
-                const offset = (window.scrollY - section.offsetTop) * 0.45;
-                parallaxBg.style.transform = `translateY(${offset}px)`;
-            }
-            window.addEventListener('scroll', updateParallax, { passive: true });
-            updateParallax();
-        }
 
     </script>
 </body>
