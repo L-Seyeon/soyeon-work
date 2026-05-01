@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Soyeon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #fff;
+            color: #1a1a1a;
+        }
+        .serif { font-family: 'Playfair Display', serif; }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* 히어로 About 타이틀 */
+        .about-hero-title {
+            font-size: clamp(5rem, 18vw, 14rem);
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+        }
+
+        /* 구분선 dot */
+        .section-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            display: inline-block;
+        }
+
+        /* 이미지 hover */
+        .img-hover {
+            overflow: hidden;
+        }
+        .img-hover img {
+            transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+        }
+        .img-hover:hover img {
+            transform: scale(1.04);
+        }
+
+        /* contact 항목 */
+        .contact-row {
+            border-top: 1px solid #e5e7eb;
+            padding: 0.9rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        .contact-row span { color: #1a1a1a; font-weight: 500; }
+
+        /* 전체 폭 인용 섹션 */
+        .quote-section {
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="hidden md:flex gap-8 text-sm font-medium flex-1">
+                <a href="projects.html"  class="hover:opacity-50 transition-opacity">Projects</a>
+                <a href="about.html"     class="hover:opacity-50 transition-opacity">About</a>
+                <a href="community.html" class="hover:opacity-50 transition-opacity">Community</a>
+                <a href="contact.html"   class="hover:opacity-50 transition-opacity">Contact</a>
+            </div>
+            <div class="flex-1 flex justify-center md:flex-none">
+                <a href="index.html" class="serif font-bold text-xl tracking-tight">Archive.</a>
+            </div>
+            <div class="flex-1 flex justify-end items-center gap-4">
+                <a href="#" class="hidden md:block text-sm font-medium hover:opacity-50 transition-opacity">Search</a>
+                <button id="navToggle" onclick="toggleMobileNav()" class="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8" aria-label="메뉴 열기">
+                    <span class="block w-5 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar1"></span>
+                    <span class="block w-5 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar2"></span>
+                    <span class="block w-4 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar3"></span>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 px-6 py-5">
+            <div class="flex flex-col gap-5 text-sm font-medium">
+                <a href="projects.html"  class="hover:opacity-50 transition-opacity">Projects</a>
+                <a href="about.html"     class="hover:opacity-50 transition-opacity">About</a>
+                <a href="community.html" class="hover:opacity-50 transition-opacity">Community</a>
+                <a href="contact.html"   class="hover:opacity-50 transition-opacity">Contact</a>
+                <a href="#"              class="hover:opacity-50 transition-opacity text-gray-400">Search</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-16">
+
+        <!-- Hero: 대형 About 타이틀 -->
+        <section class="max-w-7xl mx-auto px-6 pt-16 pb-8 fade-in">
+            <h1 class="about-hero-title serif font-bold tracking-tight">About</h1>
+        </section>
+
+        <!-- 구분 dot -->
+        <div class="max-w-7xl mx-auto px-6 pb-12 fade-in">
+            <span class="section-dot"></span>
+        </div>
+
+        <!-- 소개 2-column: 텍스트 + 이미지 -->
+        <section class="max-w-7xl mx-auto px-6 pb-20 fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
+                <!-- 텍스트 -->
+                <div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-6">Artist / Painter</p>
+                    <p class="text-gray-700 text-base leading-loose mb-8">
+                        Soyeon C는 색채와 질감을 통해 감각적인 언어를 구사하는 화가입니다.
+                        서울에서 태어나 자란 그녀는 자연의 에너지와 인간 내면의 복잡한 감정을
+                        캔버스 위에 담아냅니다.
+                    </p>
+                    <p class="text-gray-700 text-base leading-loose mb-10">
+                        그녀의 작품은 즉흥적인 붓터치와 겹겹이 쌓인 물감의 레이어로 이루어집니다.
+                        혼돈과 질서 사이의 경계를 탐구하며, 보는 이로 하여금 언어로 표현할 수
+                        없는 감정의 깊이를 느끼게 합니다.
+                    </p>
+
+                    <!-- 연락처 -->
+                    <div class="max-w-sm">
+                        <div class="contact-row">
+                            <span>Email</span>
+                            <span>soyeon@archive.kr</span>
+                        </div>
+                        <div class="contact-row">
+                            <span>Instagram</span>
+                            <span>@soyeon_official</span>
+                        </div>
+                        <div class="contact-row">
+                            <span>Location</span>
+                            <span>Seoul, Korea</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 이미지 -->
+                <div class="img-hover rounded-sm">
+                    <img src="images/KakaoTalk_20260427_144848673_04.jpg"
+                         alt="Soyeon C"
+                         class="w-full object-cover">
+                </div>
+            </div>
+        </section>
+
+        <!-- 구분선 -->
+        <div class="max-w-7xl mx-auto px-6">
+            <hr class="border-gray-200">
+        </div>
+
+        <!-- 두 번째 섹션: 텍스트 + 작품 이미지 -->
+        <section class="max-w-7xl mx-auto px-6 py-20 fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+
+                <!-- 이미지 (왼쪽) -->
+                <div class="img-hover rounded-sm order-2 md:order-1">
+                    <img src="images/KakaoTalk_20260427_152605229_02.jpg"
+                         alt="Artwork"
+                         class="w-full object-cover">
+                </div>
+
+                <!-- 텍스트 (오른쪽) -->
+                <div class="order-1 md:order-2">
+                    <p class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-6">Philosophy</p>
+                    <h2 class="serif text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-8">
+                        Finding vitality<br>in the untamed.
+                    </h2>
+                    <p class="text-gray-600 text-base leading-loose">
+                        Soyeon은 통제되지 않은 것 속에서 생동감을 찾는다는 철학을 중심으로
+                        작업합니다. 순간적인 충동과 날것의 감각을 포착하고, 모든 붓터치가 아무리
+                        즉흥적이라 할지라도 고유한 이야기를 담을 수 있다고 믿습니다.
+                    </p>
+                    <p class="text-gray-600 text-base leading-loose mt-4">
+                        자연의 에너지와 억제되지 않은 존재의 시를 담은 그녀의 작품은
+                        색채의 레이어와 순수한 표현의 순간들을 영구적으로 보존합니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 인용 풀-와이드 섹션 -->
+        <section class="quote-section py-16 md:py-24 fade-in">
+            <div class="max-w-7xl mx-auto px-6">
+                <p class="serif italic text-2xl md:text-4xl leading-relaxed text-gray-800 max-w-4xl">
+                    "Every stroke, no matter how spontaneous,<br class="hidden md:block">
+                    has the potential to tell a unique story."
+                </p>
+                <p class="text-sm text-gray-400 mt-6 tracking-widest uppercase">— Soyeon C</p>
+            </div>
+        </section>
+
+        <!-- 대형 포트레이트 + 설명 -->
+        <section class="max-w-7xl mx-auto px-6 py-20 fade-in">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-start">
+
+                <!-- 대형 이미지 (2/3 폭) -->
+                <div class="md:col-span-2 img-hover rounded-sm">
+                    <img src="images/KakaoTalk_20260427_152455665_03.jpg"
+                         alt="Soyeon in studio"
+                         class="w-full object-cover">
+                </div>
+
+                <!-- 사이드 텍스트 -->
+                <div class="flex flex-col justify-end h-full pt-4 md:pt-16">
+                    <p class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-5">Studio</p>
+                    <p class="text-gray-600 text-sm leading-loose mb-8">
+                        서울의 작업실에서 Soyeon은 매일 자연광과 함께 작업합니다.
+                        캔버스와의 대화, 물감이 공기와 만나는 순간 — 그 모든 과정이
+                        그녀에게는 살아있는 예술입니다.
+                    </p>
+                    <p class="text-gray-600 text-sm leading-loose mb-10">
+                        현재 국내외 갤러리와 협업 중이며, 개인전을 준비하고 있습니다.
+                        작품 구매 및 전시 문의는 아래 버튼을 통해 연락해 주세요.
+                    </p>
+                    <a href="contact.html"
+                       class="inline-block border border-gray-800 text-sm font-medium px-7 py-3 hover:bg-gray-800 hover:text-white transition-colors duration-300 self-start tracking-wide">
+                        Contact
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 하단 작품 스트립 -->
+        <section class="max-w-7xl mx-auto px-6 pb-32 fade-in">
+            <h2 class="serif text-2xl tracking-tight mb-8">Recent Works</h2>
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-3">
+                <div class="img-hover aspect-square bg-gray-100 rounded-sm overflow-hidden">
+                    <img src="images/KakaoTalk_20260427_144848673_01.jpg" alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="img-hover aspect-square bg-gray-100 rounded-sm overflow-hidden">
+                    <img src="images/KakaoTalk_20260427_144848673_02.jpg" alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="img-hover aspect-square bg-gray-100 rounded-sm overflow-hidden">
+                    <img src="images/KakaoTalk_20260427_144848673_03.jpg" alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="img-hover aspect-square bg-gray-100 rounded-sm overflow-hidden">
+                    <img src="images/KakaoTalk_20260427_144848673_05.jpg" alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="img-hover aspect-square bg-gray-100 rounded-sm overflow-hidden">
+                    <img src="images/KakaoTalk_20260427_152605229_04.jpg" alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="img-hover aspect-square bg-gray-100 rounded-sm overflow-hidden">
+                    <img src="images/KakaoTalk_20260427_152605229_06.jpg" alt="" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.06, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        function toggleMobileNav() {
+            const menu = document.getElementById('mobileMenu');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
+            const open = menu.classList.toggle('hidden');
+            if (!open) {
+                bar1.style.transform = 'translateY(6.5px) rotate(45deg)';
+                bar2.style.opacity = '0';
+                bar3.style.transform = 'translateY(-6.5px) rotate(-45deg) scaleX(1.25)';
+            } else {
+                bar1.style.transform = '';
+                bar2.style.opacity = '';
+                bar3.style.transform = '';
+            }
+        }
+    </script>
+</body>
+</html>
