@@ -247,15 +247,39 @@
 <body class="selection:bg-blue-100">
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm px-6 h-20 flex justify-between items-center border-b border-gray-100">
-        <div class="font-bold tracking-tighter text-xl">DAVID JOHNSON</div>
-        <div class="space-x-12 hidden md:flex text-sm font-medium">
-            <a href="projects.html"   class="hover:opacity-50 transition-opacity">Projects</a>
-            <a href="about.html"      class="hover:opacity-50 transition-opacity">About</a>
-            <a href="community.html"  class="hover:opacity-50 transition-opacity">Community</a>
-            <a href="contact.html"    class="hover:opacity-50 transition-opacity">Contact</a>
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100" id="mainNav">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <!-- 왼쪽: 데스크탑 메뉴 -->
+            <div class="hidden md:flex gap-8 text-sm font-medium flex-1">
+                <a href="projects.html"  class="hover:opacity-50 transition-opacity">Projects</a>
+                <a href="about.html"     class="hover:opacity-50 transition-opacity">About</a>
+                <a href="community.html" class="hover:opacity-50 transition-opacity">Community</a>
+                <a href="contact.html"   class="hover:opacity-50 transition-opacity">Contact</a>
+            </div>
+            <!-- 중앙: 로고 -->
+            <div class="flex-1 flex justify-center md:flex-none">
+                <a href="index.html" class="serif font-bold text-xl tracking-tight">Archive.</a>
+            </div>
+            <!-- 오른쪽: Search + 햄버거 -->
+            <div class="flex-1 flex justify-end items-center gap-4">
+                <a href="#" class="hidden md:block text-sm font-medium hover:opacity-50 transition-opacity">Search</a>
+                <button id="navToggle" onclick="toggleMobileNav()" class="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8" aria-label="메뉴 열기">
+                    <span class="block w-5 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar1"></span>
+                    <span class="block w-5 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar2"></span>
+                    <span class="block w-4 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar3"></span>
+                </button>
+            </div>
         </div>
-        <button class="md:hidden font-bold text-sm uppercase tracking-widest">Menu</button>
+        <!-- 모바일 드롭다운 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 px-6 py-5">
+            <div class="flex flex-col gap-5 text-sm font-medium">
+                <a href="projects.html"  class="hover:opacity-50 transition-opacity">Projects</a>
+                <a href="about.html"     class="hover:opacity-50 transition-opacity">About</a>
+                <a href="community.html" class="hover:opacity-50 transition-opacity">Community</a>
+                <a href="contact.html"   class="hover:opacity-50 transition-opacity">Contact</a>
+                <a href="#"              class="hover:opacity-50 transition-opacity text-gray-400">Search</a>
+            </div>
+        </div>
     </nav>
 
     <main>
@@ -622,6 +646,25 @@
         document.getElementById('worksNext').addEventListener('click', () => manualScroll(1));
 
 
+    </script>
+    <script>
+        function toggleMobileNav() {
+            const menu = document.getElementById('mobileMenu');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
+            const open = menu.classList.toggle('hidden');
+            // 햄버거 → X 애니메이션
+            if (!open) {
+                bar1.style.transform = 'translateY(6.5px) rotate(45deg)';
+                bar2.style.opacity = '0';
+                bar3.style.transform = 'translateY(-6.5px) rotate(-45deg) scaleX(1.25)';
+            } else {
+                bar1.style.transform = '';
+                bar2.style.opacity = '';
+                bar3.style.transform = '';
+            }
+        }
     </script>
 </body>
 </html>

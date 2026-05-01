@@ -98,19 +98,33 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm h-16 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-6 h-full grid grid-cols-3 items-center">
-            <div class="flex gap-8 text-sm font-medium">
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="hidden md:flex gap-8 text-sm font-medium flex-1">
                 <a href="projects.html"  class="hover:opacity-50 transition-opacity">Projects</a>
                 <a href="about.html"     class="hover:opacity-50 transition-opacity">About</a>
-                <a href="community.html" class="font-bold transition-opacity">Community</a>
+                <a href="community.html" class="font-bold">Community</a>
                 <a href="contact.html"   class="hover:opacity-50 transition-opacity">Contact</a>
             </div>
-            <div class="text-center">
+            <div class="flex-1 flex justify-center md:flex-none">
                 <a href="index.html" class="serif font-bold text-xl tracking-tight">Archive.</a>
             </div>
-            <div class="flex justify-end">
-                <button onclick="document.getElementById('searchBar').focus()" class="text-sm font-medium hover:opacity-50 transition-opacity">Search</button>
+            <div class="flex-1 flex justify-end items-center gap-4">
+                <button onclick="document.getElementById('searchBar').focus()" class="hidden md:block text-sm font-medium hover:opacity-50 transition-opacity">Search</button>
+                <button id="navToggle" onclick="toggleMobileNav()" class="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8" aria-label="메뉴 열기">
+                    <span class="block w-5 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar1"></span>
+                    <span class="block w-5 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar2"></span>
+                    <span class="block w-4 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar3"></span>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 px-6 py-5">
+            <div class="flex flex-col gap-5 text-sm font-medium">
+                <a href="projects.html"  class="hover:opacity-50 transition-opacity">Projects</a>
+                <a href="about.html"     class="hover:opacity-50 transition-opacity">About</a>
+                <a href="community.html" class="font-bold">Community</a>
+                <a href="contact.html"   class="hover:opacity-50 transition-opacity">Contact</a>
+                <button onclick="document.getElementById('searchBar').focus(); toggleMobileNav();" class="text-left hover:opacity-50 transition-opacity text-gray-400">Search</button>
             </div>
         </div>
     </nav>
@@ -200,9 +214,9 @@
 
     <script>
         const TAB_INFO = {
-            free:   { icon: '🎨', title: '자유 토크',   desc: '예술에 대한 자유로운 이야기를 나누는 공간입니다.\n작가들과 다양한 작업 경험과 영감을 공유해보세요.' },
-            review: { icon: '🖼️', title: '작품 감상',   desc: '전시, 작품, 아티스트에 대한 감상을 나눠요.\n인상 깊었던 작품 이야기를 들려주세요.' },
-            tips:   { icon: '✏️', title: '작업 팁',    desc: '재료, 기법, 작업 환경 등 실용적인 팁을 공유해요.\n서로의 노하우로 함께 성장해요.' },
+            free:   { icon: '', title: '자유 토크',   desc: '예술에 대한 자유로운 이야기를 나누는 공간입니다.\n작가들과 다양한 작업 경험과 영감을 공유해보세요.' },
+            review: { icon: '', title: '작품 감상',   desc: '전시, 작품, 아티스트에 대한 감상을 나눠요.\n인상 깊었던 작품 이야기를 들려주세요.' },
+            tips:   { icon: '', title: '작업 팁',    desc: '재료, 기법, 작업 환경 등 실용적인 팁을 공유해요.\n서로의 노하우로 함께 성장해요.' },
         };
 
         const SEED_POSTS = [
@@ -336,6 +350,23 @@
         // 초기 렌더
         if (!localStorage.getItem('communityPosts')) savePosts(SEED_POSTS);
         renderPosts();
+
+        function toggleMobileNav() {
+            const menu = document.getElementById('mobileMenu');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
+            const open = menu.classList.toggle('hidden');
+            if (!open) {
+                bar1.style.transform = 'translateY(6.5px) rotate(45deg)';
+                bar2.style.opacity = '0';
+                bar3.style.transform = 'translateY(-6.5px) rotate(-45deg) scaleX(1.25)';
+            } else {
+                bar1.style.transform = '';
+                bar2.style.opacity = '';
+                bar3.style.transform = '';
+            }
+        }
     </script>
 </body>
 </html>

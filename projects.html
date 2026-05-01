@@ -42,22 +42,33 @@
 <body class="selection:bg-blue-100">
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm h-16 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-6 h-full grid grid-cols-3 items-center">
-            <!-- 왼쪽 메뉴 -->
-            <div class="flex gap-8 text-sm font-medium">
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="hidden md:flex gap-8 text-sm font-medium flex-1">
                 <a href="projects.html"  class="hover:opacity-50 transition-opacity">Projects</a>
-                <a href="about.html"    class="hover:opacity-50 transition-opacity">About</a>
+                <a href="about.html"     class="hover:opacity-50 transition-opacity">About</a>
                 <a href="community.html" class="hover:opacity-50 transition-opacity">Community</a>
-                <a href="contact.html"  class="hover:opacity-50 transition-opacity">Contact</a>
+                <a href="contact.html"   class="hover:opacity-50 transition-opacity">Contact</a>
             </div>
-            <!-- 중앙 로고 -->
-            <div class="text-center">
+            <div class="flex-1 flex justify-center md:flex-none">
                 <a href="index.html" class="serif font-bold text-xl tracking-tight">Archive.</a>
             </div>
-            <!-- 오른쪽 -->
-            <div class="flex justify-end text-sm font-medium">
-                <a href="#" class="hover:opacity-50 transition-opacity">Search</a>
+            <div class="flex-1 flex justify-end items-center gap-4">
+                <a href="#" class="hidden md:block text-sm font-medium hover:opacity-50 transition-opacity">Search</a>
+                <button id="navToggle" onclick="toggleMobileNav()" class="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8" aria-label="메뉴 열기">
+                    <span class="block w-5 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar1"></span>
+                    <span class="block w-5 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar2"></span>
+                    <span class="block w-4 h-[1.5px] bg-gray-800 transition-all duration-300" id="bar3"></span>
+                </button>
+            </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 px-6 py-5">
+            <div class="flex flex-col gap-5 text-sm font-medium">
+                <a href="projects.html"  class="hover:opacity-50 transition-opacity">Projects</a>
+                <a href="about.html"     class="hover:opacity-50 transition-opacity">About</a>
+                <a href="community.html" class="hover:opacity-50 transition-opacity">Community</a>
+                <a href="contact.html"   class="hover:opacity-50 transition-opacity">Contact</a>
+                <a href="#"              class="hover:opacity-50 transition-opacity text-gray-400">Search</a>
             </div>
         </div>
     </nav>
@@ -158,6 +169,23 @@
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        function toggleMobileNav() {
+            const menu = document.getElementById('mobileMenu');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
+            const open = menu.classList.toggle('hidden');
+            if (!open) {
+                bar1.style.transform = 'translateY(6.5px) rotate(45deg)';
+                bar2.style.opacity = '0';
+                bar3.style.transform = 'translateY(-6.5px) rotate(-45deg) scaleX(1.25)';
+            } else {
+                bar1.style.transform = '';
+                bar2.style.opacity = '';
+                bar3.style.transform = '';
+            }
+        }
     </script>
 </body>
 </html>
