@@ -18,7 +18,7 @@
         /* 히어로 */
         .contact-hero {
             position: relative;
-            height: 52vh;
+            height: 30vh;
             min-height: 320px;
             background-image: url('images/KakaoTalk_20260427_144848673_11.jpg');
             background-size: cover;
@@ -189,13 +189,8 @@
         </div>
 
         <!-- Process 섹션 -->
-        <section class="process-section px-6 py-16 md:py-20">
+        <section class="process-section px-6 py-16 md:py-10">
             <div class="max-w-7xl mx-auto">
-                <div class="mb-12">
-                    <h2 class="serif text-2xl md:text-3xl font-bold tracking-tight mb-1">Process</h2>
-                    <p class="text-sm text-gray-400">작품 의뢰부터 전달까지의 과정을 안내합니다</p>
-                </div>
-
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 md:gap-6">
 
                     <!-- 01 -->
@@ -263,7 +258,7 @@
         </section>
 
         <!-- Notice + Contact Form -->
-        <section class="max-w-7xl mx-auto px-6 py-16 md:py-20">
+        <section class="max-w-7xl mx-auto px-6 py-16 md:py-12">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
 
                 <!-- Notice (왼쪽) -->
@@ -363,10 +358,45 @@
 
     </main>
 
-    <!-- 하단 여백 -->
-    <div class="h-16 border-t border-gray-100 flex items-center justify-center">
-        <p class="text-xs text-gray-300 tracking-widest uppercase">© 2025 Soyeon C. All rights reserved.</p>
-    </div>
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 bg-white">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mb-14">
+                <div>
+                    <a href="index.html" class="serif font-bold text-lg tracking-tight">Archive.</a>
+                    <p class="text-xs text-gray-400 mt-3 leading-relaxed max-w-xs">
+                        Soyeon C의 작품 세계를 담은 아카이브입니다.<br>색채와 감각으로 이어지는 공간.
+                    </p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-5">Menu</p>
+                    <div class="flex flex-col gap-3 text-sm">
+                        <a href="projects.html" class="hover:opacity-50 transition-opacity">Projects</a>
+                        <a href="about.html"     class="hover:opacity-50 transition-opacity">About</a>
+                        <a href="community.html" class="hover:opacity-50 transition-opacity">Community</a>
+                        <a href="contact.html"   class="hover:opacity-50 transition-opacity">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-5">Support</p>
+                    <div class="flex flex-col gap-3 text-sm">
+                        <a href="contact.html"   class="hover:opacity-50 transition-opacity">작품 문의</a>
+                        <a href="contact.html"   class="hover:opacity-50 transition-opacity">전시 협업</a>
+                        <a href="community.html" class="hover:opacity-50 transition-opacity">커뮤니티</a>
+                    </div>
+                    <div class="mt-8">
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-3">Instagram</p>
+                        <a href="https://instagram.com/soyeon_official" target="_blank"
+                           class="text-sm hover:opacity-50 transition-opacity">@soyeon_official</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-2">
+                <p class="text-xs text-gray-300 tracking-widest uppercase">© 2025 Soyeon C. All rights reserved.</p>
+                <p class="text-xs text-gray-300">Seoul, Korea</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
         function toggleMobileNav() {

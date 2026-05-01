@@ -118,7 +118,7 @@
         <section class="max-w-7xl mx-auto px-6 pb-20 fade-in">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
                 <!-- 텍스트 -->
-                <div>
+                <div class="mt-24">
                     <p class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-6">Artist / Painter</p>
                     <p class="text-gray-700 text-base leading-loose mb-8">
                         Soyeon C는 색채와 질감을 통해 감각적인 언어를 구사하는 화가입니다.
@@ -149,7 +149,7 @@
                 </div>
 
                 <!-- 이미지 -->
-                <div class="img-hover rounded-sm">
+                <div class="img-hover rounded-sm mt-24">
                     <img src="images/KakaoTalk_20260427_144848673_04.jpg"
                          alt="Soyeon C"
                          class="w-full object-cover">
@@ -235,6 +235,46 @@
         </section>
 
     </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 bg-white">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mb-14">
+                <div>
+                    <a href="index.html" class="serif font-bold text-lg tracking-tight">Archive.</a>
+                    <p class="text-xs text-gray-400 mt-3 leading-relaxed max-w-xs">
+                        Soyeon C의 작품 세계를 담은 아카이브입니다.<br>색채와 감각으로 이어지는 공간.
+                    </p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-5">Menu</p>
+                    <div class="flex flex-col gap-3 text-sm">
+                        <a href="projects.html" class="hover:opacity-50 transition-opacity">Projects</a>
+                        <a href="about.html"     class="hover:opacity-50 transition-opacity">About</a>
+                        <a href="community.html" class="hover:opacity-50 transition-opacity">Community</a>
+                        <a href="contact.html"   class="hover:opacity-50 transition-opacity">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-5">Support</p>
+                    <div class="flex flex-col gap-3 text-sm">
+                        <a href="contact.html"   class="hover:opacity-50 transition-opacity">작품 문의</a>
+                        <a href="contact.html"   class="hover:opacity-50 transition-opacity">전시 협업</a>
+                        <a href="community.html" class="hover:opacity-50 transition-opacity">커뮤니티</a>
+                    </div>
+                    <div class="mt-8">
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-3">Instagram</p>
+                        <a href="https://instagram.com/soyeon_official" target="_blank"
+                           class="text-sm hover:opacity-50 transition-opacity">@soyeon_official</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-6 flex flex-col md:flex-row justify-between items-center gap-2">
+                <p class="text-xs text-gray-300 tracking-widest uppercase">© 2025 Soyeon C. All rights reserved.</p>
+                <p class="text-xs text-gray-300">Seoul, Korea</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
         const observer = new IntersectionObserver((entries) => {
